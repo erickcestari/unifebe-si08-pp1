@@ -1,20 +1,38 @@
 package com.unifebe.devsecops.config;
 
 /**
- * ATENCAO - CODIGO PROPOSITALMENTE INSEGURO PARA FINS DIDATICOS.
- * Nunca faca isto em um projeto real: credenciais NUNCA devem ser
- * gravadas diretamente no codigo-fonte (Secret Sprawl).
+ * Credenciais lidas de variaveis de ambiente, nunca do codigo-fonte.
+ * Em producao elas sao injetadas por um cofre de segredos (Vault, AWS
+ * Secrets Manager etc.). O GITHUB_TOKEN nao serve para isso: e um segredo
+ * de CI/build, nao de runtime.
  */
-public class AppConfig {
+public final class AppConfig {
 
-    // Exemplo de credencial de banco de dados exposta no repositorio
-    public static final String DB_PASSWORD = "SuperSecretP@ssw0rd123";
+    private AppConfig() {
+    }
 
-    // Exemplo classico de chave AWS (formato oficial de exemplo da AWS)
-    public static final String AWS_ACCESS_KEY_ID = "AKIAIOSFODNN7EXAMPLE";
-    public static final String AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+    public static String dbPassword() {
+        return requireEnv("DB_PASSWORD");
+    }
 
-    // Exemplo de chave de API de um provedor de pagamentos
-    public static final String PAYMENT_GATEWAY_API_KEY = "sk_live_51H8xJ2EXAMPLEKEYDONOTUSEINPRODUCTION0001";
+    public static String awsAccessKeyId() {
+        return requireEnv("AWS_ACCESS_KEY_ID");
+    }
 
+    public static String awsSecretAccessKey() {
+        return requireEnv("AWS_SECRET_ACCESS_KEY");
+    }
+
+    public static String paymentGatewayApiKey() {
+        return requireEnv("PAYMENT_GATEWAY_API_KEY");
+    }
+
+    // Leitura sob demanda: a aplicacao sobe sem as variaveis e falha so em quem usa o segredo.
+    private static String requireEnv(String name) {
+        String value = System.getenv(name);
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException("Variavel de ambiente obrigatoria ausente: " + name);
+        }
+        return value;
+    }
 }
