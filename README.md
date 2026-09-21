@@ -5,14 +5,14 @@ Este arquivo e gerado automaticamente pela pipeline.
 
 ## Alunos
 
-- Aluno1
-- Aluno2
+- Erick Cestari
+- Vinicius Cestari
 
 ## Resultado do Docker Build
 
 | Item | Valor |
 |---|---|
 | Status | ⚪ Pulado (algum gate de seguranca falhou) |
-| Commit | `21dc3b3dce22770de1abfb33fe6dd527f212b72a` |
-| Execucao | [35548451103](https://github.com/sbaron81/unifebe-si08-devsecops/actions/runs/35548451103) |
-| Data | 21/09/2026 00:40 UTC |
+| Commit | `70a3035d5b9c82741bf9906f7cae32d9c27a8ec5` |
+| Execucao | [35661746462](https://github.com/erickcestari/unifebe-si08-pp1/actions/runs/35661746462) |
+| Data | 21/09/2026 22:16 UTC |
